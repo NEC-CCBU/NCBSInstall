@@ -140,7 +140,7 @@
       <Project>{5f1e9f19-2fe4-40de-aa15-12e2c77634bf}</Project>
       <Name>Calamari.Tests</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Calamari\Calamari.csproj">
+    <ProjectReference Include="..\NCBSInstall\ncbsInstall.csproj">
       <Project>{79ce5cfa-e3ff-4376-8b49-ac1005c3e189}</Project>
       <Name>Calamari</Name>
     </ProjectReference>

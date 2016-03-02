@@ -51,7 +51,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Build\Package.targets" />
+    <None Include="app.config" />
+    <None Include="Build\Package.targets">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
     <None Include="SecureShell\DeployToLinux.sh">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -76,10 +79,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Calamari.Azure\Calamari.Azure.csproj">
-      <Project>{e58a81ec-2c83-49e4-8dd4-877e68e0759b}</Project>
-      <Name>Calamari.Azure</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NCBSInstall\ncbsInstall.csproj">
       <Project>{79ce5cfa-e3ff-4376-8b49-ac1005c3e189}</Project>
       <Name>ncbsInstall</Name>

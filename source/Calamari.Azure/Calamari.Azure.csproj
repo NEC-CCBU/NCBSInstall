@@ -238,7 +238,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Calamari\Calamari.csproj">
+    <ProjectReference Include="..\NCBSInstall\ncbsInstall.csproj">
       <Project>{79ce5cfa-e3ff-4376-8b49-ac1005c3e189}</Project>
       <Name>Calamari</Name>
     </ProjectReference>
