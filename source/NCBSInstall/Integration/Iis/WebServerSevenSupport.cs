@@ -10,6 +10,57 @@ namespace Calamari.Integration.Iis
     {
         const string Localhost = "localhost";
 
+        //The bindingInfo parameter has three colon-delimited fields. The first field is a specific IP address or an asterisk (an asterisk specifies all unassigned IP addresses). The second field is the port number; the default is 80. The third field is an optional host header.
+        public void AddBinding(string webSiteName, string bindingInfo, string bindingProtocol="http")
+        {
+            if (string.IsNullOrWhiteSpace(webSiteName)){
+                return;
+            }
+            using (var serverManager = ServerManager.OpenRemote(Localhost))
+            {
+                var existing = serverManager.Sites.FirstOrDefault(x => String.Equals(x.Name, webSiteName, StringComparison.InvariantCultureIgnoreCase));
+                if (existing!=null)
+                {
+                    existing.Bindings.Add(bindingInfo, bindingProtocol);
+                }
+                else
+                {
+                    throw new Exception("The site does not exist");
+                }
+            }
+
+        }
+        public override void CreateWebSiteOrVirtualDirectory(string webSiteName, string virtualDirectoryPath, string webRootPath, int port, string poolName, string poolVersion="v4.0")
+        {
+            var virtualParts = (virtualDirectoryPath ?? String.Empty).Split('/', '\\').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+
+            using (var serverManager = ServerManager.OpenRemote(Localhost))
+            {
+                var existing = serverManager.Sites.FirstOrDefault(x => String.Equals(x.Name, webSiteName, StringComparison.InvariantCultureIgnoreCase));
+                //Create Pool if not exists
+                var poolExisting = serverManager.ApplicationPools.FirstOrDefault(x => String.Equals(x.Name, poolName, StringComparison.InvariantCultureIgnoreCase));
+                if (poolExisting == null && !string.IsNullOrWhiteSpace(poolName))
+                {
+                    ApplicationPool pool = serverManager.ApplicationPools.Add(poolName);
+                    if (!string.IsNullOrWhiteSpace(poolVersion))
+                        pool.ManagedRuntimeVersion =poolVersion;
+                }
+                if (existing == null)
+                {
+                    existing = serverManager.Sites.Add(webSiteName, webRootPath, port);
+                    if (!string.IsNullOrWhiteSpace(poolName))
+                        existing.ApplicationDefaults.ApplicationPoolName = poolName;
+                }
+
+                if (virtualParts.Length > 0)
+                {
+                    var app = existing.Applications.Add(virtualDirectoryPath, webRootPath);
+                    //var vd = app.VirtualDirectories.Add(virtualDirectoryPath, webRootPath);
+                }
+                
+                serverManager.CommitChanges();
+            }
+        }
         public override void CreateWebSiteOrVirtualDirectory(string webSiteName, string virtualDirectoryPath, string webRootPath, int port)
         {
             var virtualParts = (virtualDirectoryPath ?? String.Empty).Split('/', '\\').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
@@ -19,7 +70,9 @@ namespace Calamari.Integration.Iis
                 var existing = serverManager.Sites.FirstOrDefault(x => String.Equals(x.Name, webSiteName, StringComparison.InvariantCultureIgnoreCase));
                 if (existing == null)
                 {
-                    existing = serverManager.Sites.Add(webSiteName, webRootPath, port);                    
+                    
+                    existing = serverManager.Sites.Add(webSiteName, webRootPath, port);
+                    
                 }
 
                 if (virtualParts.Length > 0)

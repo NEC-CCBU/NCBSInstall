@@ -65,7 +65,7 @@ function get_octopusvariable
 #	---------------------------------------------------------------------------
 function set_octopusvariable
 {
-	MESSAGE="##octopus[setVariable"
+	MESSAGE="NCBSInstall[setVariable"
 
 	if [ -n "$1" ]
 	then
@@ -107,7 +107,7 @@ function new_octopusartifact
 	    ofn=`basename "$pth"`
 	fi
 
-	echo "##octopus[createArtifact path='$(encode_servicemessagevalue $pth)' originalFilename='$(encode_servicemessagevalue $ofn)']"
+	echo "NCBSInstall[createArtifact path='$(encode_servicemessagevalue $pth)' originalFilename='$(encode_servicemessagevalue $ofn)']"
 
 	exit $?
 }

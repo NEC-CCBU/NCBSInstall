@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd" xmlns:octopus="http://octopus.org">
+  <metadata>
+    <id>NCBS.Install</id>
+    <version>1.0.0.0</version>
+    <authors>NEC Iberica</authors>
+    <description>Contains the command-line NCBS Install tool</description>
+    <releaseNotes></releaseNotes>
+    <language>en-US</language>
+  </metadata>
+  <files>
+    <file src="..\NCBSInstall\bin\**\*.*" target="" exclude="*.vshost*;**\*.xml" />
+    <file src="..\packages\Octopus.Dependencies.ScriptCS.3.0.1\runtime\**\*.*" target="ScriptCS" exclude="**\*.xml" />
+    <!--<file src="..\packages\Octopus.Dependencies.AzureCmdlets.0.8.4\PowerShell\**\*.*" target="AzurePowershell" exclude="**\*.xml" />-->
+  </files>
+</package>

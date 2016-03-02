@@ -6,6 +6,26 @@ namespace Calamari.Integration.Iis
 {
     public class WebServerSixSupport : WebServerSupport
     {
+        public override void CreateWebSiteOrVirtualDirectory(string webSiteName, string virtualDirectoryPath, string webRootPath, int port, string poolName,string poolVersion="v2.0")
+        {
+            //Not implemented: Pool creation is IIS 6.0
+            var siteId = GetSiteId(webSiteName);
+            if (siteId == null)
+            {
+                using (var w3Svc = new DirectoryEntry("IIS://localhost/w3svc"))
+                {
+                    siteId = ((int)w3Svc.Invoke("CreateNewSite", new object[] { webSiteName, new object[] { "*:" + port + ":" }, webRootPath })).ToString();
+                    w3Svc.CommitChanges();
+                }
+            }
+
+            var virtualParts = (virtualDirectoryPath ?? string.Empty).Split('/', '\\').Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+
+            if (virtualParts.Length == 0)
+                return;
+
+            CreateVirtualDirectory("IIS://localhost/w3svc/" + siteId + "/Root", virtualParts[0], webRootPath, virtualParts.Skip(1).ToArray());
+        }
         public override void CreateWebSiteOrVirtualDirectory(string webSiteName, string virtualDirectoryPath, string webRootPath, int port)
         {
             var siteId = GetSiteId(webSiteName);

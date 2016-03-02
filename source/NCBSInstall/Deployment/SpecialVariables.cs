@@ -82,6 +82,9 @@
             public static readonly string UpdateIisWebsite = "Octopus.Action.Package.UpdateIisWebsite";
             public static readonly string UpdateIisWebsiteName = "Octopus.Action.Package.UpdateIisWebsiteName";
             public static readonly string CustomInstallationDirectory = "Octopus.Action.Package.CustomInstallationDirectory";
+            public static readonly string IisSitePort = "Octopus.Action.Package.IisSitePort";
+            public static readonly string IisSitePool = "Octopus.Action.Package.IisSitePool";
+            public static readonly string IisSitePoolVersion = "Octopus.Action.Package.IisSitePoolVersion";
             public static readonly string CustomInstallationDirectoryShouldBePurgedBeforeDeployment = "Octopus.Action.Package.CustomInstallationDirectoryShouldBePurgedBeforeDeployment";
             public static readonly string AutomaticallyUpdateAppSettingsAndConnectionStrings = "Octopus.Action.Package.AutomaticallyUpdateAppSettingsAndConnectionStrings";
             public static readonly string JsonConfigurationVariablesEnabled = "Octopus.Action.Package.JsonConfigurationVariablesEnabled";

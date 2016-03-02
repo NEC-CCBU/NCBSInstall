@@ -12,13 +12,14 @@
   <Target Name="CreatePackageForOctopus">
     <PropertyGroup>
       <OctopusPackageVersion Condition="'$(Configuration)' == 'Debug'">1.0.$([System.DateTime]::Now.ToString(yyyyMMdd)).$([System.DateTime]::Now.ToString(HHmmss))</OctopusPackageVersion>
-      <OctopusPackageVersion Condition="'$(Configuration)' != 'Debug'">$(GitVersion_NuGetVersion)</OctopusPackageVersion>
+      <!--<OctopusPackageVersion Condition="'$(Configuration)' != 'Debug'">$(GitVersion_NuGetVersion)</OctopusPackageVersion>-->
+      <OctopusPackageVersion Condition="'$(Configuration)' != 'Debug'">1.0.$([System.DateTime]::Now.ToString(ddMMyyyy)).$([System.DateTime]::Now.ToString(HHmmss))</OctopusPackageVersion>
     </PropertyGroup>
     <Message Text="NuGet path: $(NuGetExePath)" Importance="high" />
     <Message Text="Version: $(OctopusPackageVersion)" Importance="high" />
 
     <MakeDir Directories="$(ProjectDir)..\..\built-packages"/>
-    <Exec Command='"$(NuGetExePath)" pack "$(ProjectDir)Windows\Calamari.nuspec" -BasePath "$(ProjectDir.TrimEnd("\"))" -Version $(OctopusPackageVersion) -NoPackageAnalysis -NonInteractive -OutputDirectory "$(ProjectDir)..\..\built-packages"' />
-    <Exec Command='"$(NuGetExePath)" pack "$(ProjectDir)Windows\Calamari.Azure.nuspec" -BasePath "$(ProjectDir.TrimEnd("\"))" -Version $(OctopusPackageVersion) -NoPackageAnalysis -NonInteractive -OutputDirectory "$(ProjectDir)..\..\built-packages"' />
+    <Exec Command='"$(NuGetExePath)" pack "$(ProjectDir)Windows\NCBSInstall.nuspec" -BasePath "$(ProjectDir.TrimEnd("\"))" -Version $(OctopusPackageVersion) -NoPackageAnalysis -NonInteractive -OutputDirectory "$(ProjectDir)..\..\built-packages"' />
+    <!--<Exec Command='"$(NuGetExePath)" pack "$(ProjectDir)Windows\Calamari.Azure.nuspec" -BasePath "$(ProjectDir.TrimEnd("\"))" -Version $(OctopusPackageVersion) -NoPackageAnalysis -NonInteractive -OutputDirectory "$(ProjectDir)..\..\built-packages"' />-->
   </Target>
 </Project>

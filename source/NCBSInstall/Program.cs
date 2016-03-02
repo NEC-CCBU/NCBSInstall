@@ -18,13 +18,13 @@ namespace Calamari
 
         static int Main(string[] args)
         {
-            var program = new Program("Calamari", typeof(Program).Assembly.GetInformationalVersion());
+            var program = new Program("", typeof(Program).Assembly.GetInformationalVersion());
             return program.Execute(args);
         }
 
         protected int Execute(string[] args)
         {
-            Log.Verbose($"Octopus Deploy: {displayName} version {informationalVersion}");
+            Log.Verbose($"NCBSInstall: {displayName} version {informationalVersion}");
 
             ProxyInitializer.InitializeDefaultProxy();
             RegisterCommandAssemblies();

@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyDescription("Calamari is a set of open source deployment agent libraries for Octopus Deploy.")]
-[assembly: AssemblyCompany("Octopus Deploy Pty. Ltd.")]
-[assembly: AssemblyProduct("Calamari")]
-[assembly: AssemblyCopyright("Copyright © Octopus Deploy Pty. Ltd. 2011-2015")]
+[assembly: AssemblyDescription("NCBSInstall deploy agent.")]
+[assembly: AssemblyCompany("NCBSInstall Pty. Ltd.")]
+[assembly: AssemblyProduct("NCBSInstall")]
+[assembly: AssemblyCopyright("Copyright © NEC. Ltd. 2016")]
 [assembly: AssemblyCulture("")]
 #if DEBUG
 

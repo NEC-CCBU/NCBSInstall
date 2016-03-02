@@ -11,6 +11,7 @@ namespace Calamari.Deployment.Conventions
     {
         readonly ICalamariFileSystem fileSystem;
         readonly IInternetInformationServer iis;
+        readonly WebServerSupport webServer = WebServerSupport.AutoDetect();
 
         public LegacyIisWebSiteConvention(ICalamariFileSystem fileSystem, IInternetInformationServer iis)
         {
@@ -36,15 +37,18 @@ namespace Calamari.Deployment.Conventions
             // In situations where the IIS version cannot be correctly determined automatically,
             // this variable can be set to force IIS6 compatibility.
             var legacySupport = deployment.Variables.GetFlag(SpecialVariables.UseLegacyIisSupport);
-
+            //Check if site doesnt exist so create it
             var updated = iis.OverwriteHomeDirectory(iisSiteName, webRoot, legacySupport);
 
-            if (!updated)
-                throw new CommandException(
+            if (!updated) {
+                //webServer.CreateWebSiteOrVirtualDirectory(iisSiteName, "/", webRoot, Int32.Parse(deployment.Variables.Get(SpecialVariables.Package.IisSitePort)));
+                webServer.CreateWebSiteOrVirtualDirectory(iisSiteName, "/", webRoot, Int32.Parse(deployment.Variables.Get(SpecialVariables.Package.IisSitePort)), deployment.Variables.Get(SpecialVariables.Package.IisSitePool), deployment.Variables.Get(SpecialVariables.Package.IisSitePoolVersion));
+                Log.Info("The IIS website named '{0}' with path: '{1}' with port {2}", iisSiteName, webRoot, deployment.Variables.Get(SpecialVariables.Package.IisSitePort), deployment.Variables.Get(SpecialVariables.Package.IisSitePool));
+             /*   throw new CommandException(
                     string.Format(
                         "Could not find an IIS website or virtual directory named '{0}' on the local machine. You need to create the site and/or virtual directory manually. To turn off this feature, use the 'Configure features' link in the deployment step configuration to disable IIS updates.", 
-                        iisSiteName));
-
+                        iisSiteName));*/
+            }
             Log.Info("The IIS website named '{0}' has had its path updated to: '{1}'", iisSiteName, webRoot);
         }
 
